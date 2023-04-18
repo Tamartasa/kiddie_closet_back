@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kiddie_closet_app',
         'USER': 'postgres',
-        'PASSWORD': 'tkt@200974467',
+        'PASSWORD': '',
         'HOST': 'database-1.c7zz7qxgtito.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
