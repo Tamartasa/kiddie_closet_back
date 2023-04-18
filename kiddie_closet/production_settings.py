@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'kiddie_closet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kiddie_closet_app',
+        'NAME': 'kiddie_closet_db',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'tamar13190',
         'HOST': 'database-1.c7zz7qxgtito.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
