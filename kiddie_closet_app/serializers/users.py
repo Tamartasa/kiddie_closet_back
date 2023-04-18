@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -36,6 +37,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     # when creating a new user, set the User fields and the AppUser fields
+    # transaction.atomic() - all or nothing
     def create(self, validated_data):
         is_staff = validated_data.pop('is_staff', False)
         if is_staff and not self.context['request'].user.is_staff:
@@ -50,13 +52,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
 
-        appuser= AppUser.objects.create(
-            user_id=user.id,
-            city=validated_data['city'],
-            neighborhood=validated_data['neighborhood'],
-            phone_number=validated_data['phone_number']
-        )
-        appuser.save()
+        with transaction.atomic():
+            appuser= AppUser.objects.create(
+                user_id=user.id,
+                city=validated_data['city'],
+                neighborhood=validated_data['neighborhood'],
+                phone_number=validated_data['phone_number']
+            )
+            appuser.save()
 
         return user
 
