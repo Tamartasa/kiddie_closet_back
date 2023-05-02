@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'kiddie_closet.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kiddie_closet_db',
-        'USER': 'postgres',
-        'PASSWORD': 'tamar13190',
-        'HOST': 'database-1.c7zz7qxgtito.us-east-1.rds.amazonaws.com',
+        'NAME': 'kiddiedb',
+        'USER': 'Tamar13190',
+        'PASSWORD': 'Tamar13190',
+        'HOST': 'kiddiedb.c7zz7qxgtito.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -136,9 +136,9 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
     ),
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    # 'DEFAULT_FILTER_BACKENDS': (
+    #     'django_filters.rest_framework.DjangoFilterBackend',
+    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),

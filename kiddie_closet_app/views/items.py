@@ -30,6 +30,7 @@ class ItemsViewSet(ModelViewSet):
         # size = django_filters.NumberFilter()
         size_from = django_filters.NumberFilter(field_name='size', lookup_expr='gt')
         size_to = django_filters.NumberFilter(field_name='size', lookup_expr='lt')
+        ad = django_filters.CharFilter(field_name='ad')
         class Meta:
             model = Item
             fields = {
@@ -40,11 +41,9 @@ class ItemsViewSet(ModelViewSet):
             }
 
     queryset = Item.objects.all()
-
     permission_classes = [ItemPermissions]
-
     serializer_class = ItemSerializer
-
+    filter_class = ItemFilter
     # Get all items or search item by field
     # def get_queryset(self):
     #     qs = Item.objects.all()
