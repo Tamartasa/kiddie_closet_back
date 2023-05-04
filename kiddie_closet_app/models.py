@@ -73,7 +73,7 @@ class Item(models.Model):
     condition = models.CharField(db_column="condition", choices=CONDITION_CHOICES, max_length=32, null=True, blank=True)
     gender = models.CharField(db_column="gender", choices=GENDER_CHOICES, max_length=32, null=True, blank=True)
     #todo: change later to null=false
-    image = models.CharField(db_column="image", upload_to='images/', null=True, blank=True)
+    image = models.TextField(db_column="image", null=True, blank=True)
     description = models.TextField(db_column='description', null=True, blank=True)
     is_interested = models.BooleanField(db_column="is_interested", null=True, blank=True)
     is_multiple = models.BooleanField(db_column="is_multiple", default=True, null=True, blank=True)
