@@ -1,3 +1,4 @@
-clothes
-books
-toys
+clothes, https://t3.ftcdn.net/jpg/01/38/94/62/360_F_138946263_EtW7xPuHRJSfyl4rU2WeWmApJFYM0B84.jpg
+books, https://media.istockphoto.com/id/1216658448/photo/stack-of-colorful-books-isolated-on-white-background-collection-of-different-books-hardback.jpg?s=612x612&w=0&k=20&c=_8yq2H5pkScnt0-DXkud4EEJKi8P0RRzZpAUSrh5lvk=
+toys, https://media.istockphoto.com/id/687165852/photo/toys.jpg?b=1&s=170667a&w=0&k=20&c=aECJBVRGL3jNtrbiHOTMq1-5rSv3xeNUpZywEZYwvX4=
+other, https://www.shutterstock.com/image-photo/big-collection-different-objects-isolated-260nw-1146951128.jpg

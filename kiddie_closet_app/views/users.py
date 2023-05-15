@@ -15,6 +15,7 @@ def sign_up(request):
     serializer = RegisterSerializer(data=request.data, many=False, context={'request': request})
     if serializer.is_valid(raise_exception=True):
         new_user = serializer.create(serializer.validated_data)
+        print(Response)
         return Response(data=UserSerializer(instance=new_user, many=False).data)
 
 

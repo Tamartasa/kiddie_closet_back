@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/ads/', include('kiddie_closet_app.urls.ads')),
     path('api/items/', include('kiddie_closet_app.urls.items')),
     path('api/neighborhoods/', include('kiddie_closet_app.urls.neighborhoods')),
+    path('api/categories/', include('kiddie_closet_app.urls.categories'))
 
     ]

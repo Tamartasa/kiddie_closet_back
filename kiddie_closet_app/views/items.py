@@ -1,8 +1,7 @@
 import django_filters
 from rest_framework.viewsets import ModelViewSet
 
-from kiddie_closet_app.models import Ad, Item
-from kiddie_closet_app.serializers.ads import AdSerializer
+from kiddie_closet_app.models import Item
 from kiddie_closet_app.serializers.items import ItemSerializer
 
 
@@ -24,47 +23,28 @@ class ItemPermissions(BaseException):
         return True
 
 
-class ItemsViewSet(ModelViewSet):
-    #todo: not working!
-    class ItemFilter(django_filters.FilterSet):
-        # size = django_filters.NumberFilter()
-        size_from = django_filters.NumberFilter(field_name='size', lookup_expr='gt')
-        size_to = django_filters.NumberFilter(field_name='size', lookup_expr='lt')
-        ad = django_filters.CharFilter(field_name='ad')
-        class Meta:
-            model = Item
-            fields = {
-                'size': ['exact'],
-                'category': ['exact'],
-                'condition': ['iexact'],
-                'gender': ['iexact']
-            }
+class ItemFilter(django_filters.FilterSet):
+    size_from = django_filters.NumberFilter(field_name='size', lookup_expr='gte')
+    size_to = django_filters.NumberFilter(field_name='size', lookup_expr='lte')
+    ad = django_filters.CharFilter(field_name='ad__id')
+    class Meta:
+        model = Item
+        fields = {
+            'size': ['exact'],
+            'category': ['exact'],
+            'condition': ['iexact'],
+            'gender': ['iexact']
+        }
 
+
+class ItemsViewSet(ModelViewSet):
     queryset = Item.objects.all()
     permission_classes = [ItemPermissions]
     serializer_class = ItemSerializer
-    filter_class = ItemFilter
-    # Get all items or search item by field
-    # def get_queryset(self):
-    #     qs = Item.objects.all()
-    #     if self.action == 'list':
-    #         # by category
-    #         category = self.request.query_params.get('category')
-    #         if category:
-    #             qs = qs.filter(category_id__exact=category)
-    #
-    #         size = self.request.query_params.get('size')
-    #         if size:
-    #             qs = qs.filter(size__exact=size)
-    #
-    #         condition = self.request.query_params.get('condition')
-    #         if condition:
-    #             qs = qs.filter(condition__iexact=condition)
-    #
-    #         gender = self.request.query_params.get('gender')
-    #         if gender:
-    #             qs = qs.filter(gender__iexact=gender)
-    #
-    #
-    #     return qs
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = ItemFilter
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = self.filter_queryset(qs)  # apply filters
+        return qs

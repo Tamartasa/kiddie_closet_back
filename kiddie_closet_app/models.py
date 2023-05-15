@@ -9,7 +9,7 @@ from django.db import models
 class AppUser(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.RESTRICT, related_name='app_user')
-    city = models.CharField(db_column="city", max_length=256, null=False, blank=False)
+    city = models.CharField(db_column="city", max_length=256, null=False, blank=False, default='Tel Aviv')
     neighborhood = models.CharField(db_column="neighborhood", max_length=256, null=True, blank=True)
     phone_number = models.CharField(db_column="phone_number", max_length=128, null=False, blank=False)
 
@@ -18,7 +18,7 @@ class Ad(models.Model):
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
     city = models.CharField(db_column="city", max_length=256, null=False, blank=False)
     neighborhood = models.CharField(db_column="neighborhood", max_length=256, null=True, blank=True)
-    published_date = models.DateTimeField(db_column="published_field", null=True, blank=True)
+    published_date = models.DateTimeField(db_column="published_date", null=True, blank=True)
     #is_available = # if all the items in the ad are not available
     title = models.CharField(db_column="title", max_length=256, null=False, blank=False)
 
@@ -31,11 +31,14 @@ class Ad(models.Model):
 class Category(models.Model):
 
     category_name = models.CharField(db_column="category_name", max_length=256, null=False, blank=False)
-
+    category_image_url = models.URLField(db_column="category_image_url", max_length=2083, null=True, blank=True)
 
     class Meta:
         db_table = 'categories'
         ordering = ['id']
+
+    def __str__(self):
+        return self.category_name
 
 class Neighborhood(models.Model):
 
@@ -66,14 +69,21 @@ CONDITION_CHOICES = [('N', 'New'), ('E', 'Excellent'), ('G', 'Good'), ('F', 'Fai
 
 class Item(models.Model):
 
+    # user = models.ForeignKey(User, on_delete=models.RESTRICT)
+    # city = models.CharField(db_column="city", max_length=256, null=False, blank=False)
+    # neighborhood = models.CharField(db_column="neighborhood", max_length=256, null=True, blank=True)
+    published_date = models.DateTimeField(db_column="published_date", null=True, blank=True)
     category = models.ForeignKey(Category,  on_delete=models.SET_NULL, null=True)
     ad = models.ForeignKey(Ad, on_delete=models.RESTRICT)
+    title = models.CharField(db_column="title", max_length=256, null=False, blank=False)
+    #todo: change size to age
+
     size = models.IntegerField(db_column="size", null=False, blank=False,
                                validators=[MinValueValidator(0), MaxValueValidator(16)])
     condition = models.CharField(db_column="condition", choices=CONDITION_CHOICES, max_length=32, null=True, blank=True)
     gender = models.CharField(db_column="gender", choices=GENDER_CHOICES, max_length=32, null=True, blank=True)
     #todo: change later to null=false
-    image = models.TextField(db_column="image", null=True, blank=True)
+    image = models.TextField(db_column="image", null=True, blank=True, default="https://img.freepik.com/free-vector/baby-clothes-set_74855-202.jpg?w=2000")
     description = models.TextField(db_column='description', null=True, blank=True)
     is_interested = models.BooleanField(db_column="is_interested", null=True, blank=True)
     is_multiple = models.BooleanField(db_column="is_multiple", default=True, null=True, blank=True)

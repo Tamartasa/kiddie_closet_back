@@ -42,6 +42,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         is_staff = validated_data.pop('is_staff', False)
         if is_staff and not self.context['request'].user.is_staff:
             raise serializers.ValidationError("You do not have permission to create staff users.")
+
+        # Check if all required fields are present in the request data
+        required_fields = ('city', 'neighborhood', 'phone_number')
+        if not all(field in validated_data for field in required_fields):
+            raise serializers.ValidationError(f"Please provide all required fields: {', '.join(required_fields)}")
+
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
