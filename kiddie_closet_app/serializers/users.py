@@ -4,11 +4,17 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from kiddie_closet_app.models import AppUser
+class AppUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AppUser
+        fields = ('city', 'neighborhood', 'phone_number')
+
 class UserSerializer(serializers.ModelSerializer):
+    app_user = AppUserSerializer()
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name')
+        fields = ('first_name', 'last_name', 'email', 'username', 'date_joined', 'app_user')
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True,
                                    validators=[UniqueValidator(queryset=User.objects.all())])
@@ -71,11 +77,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 
-# class AppUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = AppUser
-#         fields = ('city', 'neighborhood')
-#
+
+
+
 
 #
 #

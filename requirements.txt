@@ -6,3 +6,4 @@ djangorestframework-simplejwt
 requests
 django-filter
 gunicorn
+google-auth

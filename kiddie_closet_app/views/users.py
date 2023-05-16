@@ -1,5 +1,9 @@
 # Get self user data, available for authenticated User
+import jwt
+import requests
 from django.contrib.auth.models import User
+from google.oauth2 import id_token
+from google.auth.transport import requests
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -8,6 +12,17 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from kiddie_closet_app.serializers.users import RegisterSerializer, UserSerializer
 
+@api_view(['POST'])
+def google_auth(request):
+    CLIENT_ID = "777826670126-d4jtjnif246030bhcuouh35ptrphtcik.apps.googleusercontent.com"
+    google_token = request.headers['Authorization']
+    print('auth header', google_token)
+    idinfo = id_token.verify_oauth2_token(google_token, requests.Request(), CLIENT_ID)
+    # res = jwt.decode(jwt=google_token, algorithms=["RS256"], key="")
+    print(idinfo)
+    # Process the ID token
+    # Assuming authentication is successful, return a response
+    return Response({"message": "Authentication successful"})
 
 # signup as user (available for all) or staff (available only by staff user)
 @api_view(['POST'])
